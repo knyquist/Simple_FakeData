@@ -1,0 +1,52 @@
+/* Copyleft: Created by Steve Presse, 2011.Mar.08. */
+
+// A gaussian noise stepping program
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+#define TOTAL 3000
+
+const float Pi = 3.1415926535897;
+int main()
+{
+	FILE * fw;//file to write
+	FILE * fr;//file to read
+	srand((unsigned)time(0));
+	int i,j,k;
+	double signal = 0, step = 1.0, timeinst=0;
+	fw=fopen("test_data.dat","w");
+	     for( i=0; i< 20000; i++)
+	       {
+		      double r1, r2, gauss, stochtime;
+		      r1  = (rand() / (float)(RAND_MAX));
+		      r2  = (rand() / (float)(RAND_MAX));   	      
+		      gauss = sqrt(-2*log(r1))*cos(2*Pi*r2);
+		      signal = step + 400*gauss;
+		      timeinst = timeinst +0.01;		
+		      stochtime = log(1/r2);
+		      if(stochtime > 6){step=step-500.0;}	
+		      fprintf(fw,"%lf %lf %lf\n", timeinst, step, signal);
+	       }
+	fclose(fw);
+ return 0;
+}	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
